@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>우리 동네의 이상한 아이들</title>
+</head>
+
+<body>
+
+  <h1>우리 동네의 이상한 아이들</h1>
+
+  <h2>주인공 만들기</h2>
+
+  <p>이름</p>
+  <input type="text" id="name" placeholder="이름을 입력하세요">
+
+  <p>나이</p>
+  <button onclick="selectAge(17)">17살</button>
+  <button onclick="selectAge(18)">18살</button>
+  <button onclick="selectAge(19)">19살</button>
+
+  <p id="ageText">나이를 선택해주세요.</p>
+
+  <p>성별</p>
+  <button onclick="selectGender('남성')">남성</button>
+  <button onclick="selectGender('여성')">여성</button>
+
+  <p id="genderText">성별을 선택해주세요.</p>
+
+  <br>
+
+  <button onclick="startGame()">게임 시작</button>
+
+  <div id="game" style="display:none;">
+
+    <hr>
+
+    <h2 id="welcome"></h2>
+
+    <p>체력: <span id="hp">50</span></p>
+    <p>힘: <span id="strength">30</span></p>
+    <p>민첩: <span id="agility">30</span></p>
+    <p>지능: <span id="intelligence">40</span></p>
+    <p>사교: <span id="social">35</span></p>
+    <p>정신력: <span id="mental">40</span></p>
+
+    <hr>
+
+    <h3>오늘은 무엇을 할까?</h3>
+
+    <button onclick="goToSchool()">학교에 간다</button>
+    <button onclick="study()">공부한다</button>
+    <button onclick="rest()">쉰다</button>
+
+    <p id="result"></p>
+
+  </div>
+
+<script>
+
+let playerName = "";
+let playerAge = 0;
+let playerGender = "";
+
+function selectAge(age) {
+  playerAge = age;
+  document.getElementById("ageText").innerText =
+    "선택한 나이: " + age;
+}
+
+function selectGender(gender) {
+  playerGender = gender;
+  document.getElementById("genderText").innerText =
+    "선택한 성별: " + gender;
+}
+
+function startGame() {
+
+  playerName = document.getElementById("name").value;
+
+  if (playerName === "") {
+    alert("이름을 입력해주세요.");
+    return;
+  }
+
+  if (playerAge === 0) {
+    alert("나이를 선택해주세요.");
+    return;
+  }
+
+  if (playerGender === "") {
+    alert("성별을 선택해주세요.");
+    return;
+  }
+
+  document.getElementById("welcome").innerText =
+    playerName + "의 이야기";
+
+  document.getElementById("game").style.display = "block";
+}
+
+function goToSchool() {
+
+  document.getElementById("result").innerText =
+    "당신은 학교로 향했다. 오늘은 무슨 일이 일어날까?";
+}
+
+function study() {
+
+  let intelligence =
+    Number(document.getElementById("intelligence").innerText);
+
+  intelligence += 5;
+
+  document.getElementById("intelligence").innerText =
+    intelligence;
+
+  document.getElementById("result").innerText =
+    "열심히 공부했다. 지능이 5 올랐다.";
+}
+
+function rest() {
+
+  let hp =
+    Number(document.getElementById("hp").innerText);
+
+  hp += 10;
+
+  if (hp > 100) {
+    hp = 100;
+  }
+
+  document.getElementById("hp").innerText = hp;
+
+  document.getElementById("result").innerText =
+    "푹 쉬었다. 체력이 회복됐다.";
+}
+
+</script>
+
+</body>
+</html>
