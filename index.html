@@ -24,7 +24,55 @@
 
     h1 {
       text-align: center;
-      margin-bottom: 5px;
+    }
+
+    h2 {
+      margin-top: 30px;
+    }
+
+    input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 13px;
+      margin: 8px 0;
+      background: #303030;
+      border: 1px solid #666;
+      border-radius: 8px;
+      color: white;
+      font-size: 16px;
+    }
+
+    button {
+      background: #444444;
+      color: white;
+      border: none;
+      padding: 13px;
+      border-radius: 8px;
+      font-size: 15px;
+      margin: 4px;
+    }
+
+    button:active {
+      background: #666666;
+    }
+
+    .choice {
+      width: 100%;
+      margin: 6px 0;
+    }
+
+    .selected {
+      background: #777777;
+    }
+
+    #creation {
+      background: #303030;
+      padding: 20px;
+      border-radius: 12px;
+    }
+
+    #gameScreen {
+      display: none;
     }
 
     #date {
@@ -53,24 +101,15 @@
       margin-bottom: 20px;
     }
 
-    button {
-      background: #444444;
-      color: white;
-      border: none;
-      padding: 14px;
-      border-radius: 8px;
-      font-size: 16px;
-    }
-
-    button:active {
-      background: #666666;
+    .menu button {
+      margin: 0;
     }
 
     #story {
       background: #303030;
       padding: 20px;
       border-radius: 10px;
-      min-height: 100px;
+      min-height: 120px;
       line-height: 1.7;
     }
 
@@ -78,113 +117,219 @@
 
 </head>
 
+
 <body>
+
 
 <div id="game">
 
-  <h1>우리 동네의 이상한 아이들</h1>
 
-  <div id="date">
-    9월 1일 월요일 · 오전 7:30
-  </div>
+  <!-- =====================
+       캐릭터 생성
+  ====================== -->
 
+  <div id="creation">
 
-  <div class="status">
+    <h1>우리 동네의<br>이상한 아이들</h1>
 
-    <div class="stat">
-      <span>이름</span>
-      <span id="name">기령</span>
-    </div>
+    <h2>주인공 만들기</h2>
 
-    <div class="stat">
-      <span>나이</span>
-      <span id="age">18</span>
-    </div>
+    <p>이름</p>
 
-    <hr>
-
-    <div class="stat">
-      <span>♥ 체력</span>
-      <span id="hp">50</span>
-    </div>
-
-    <div class="stat">
-      <span>⚔ 힘</span>
-      <span id="strength">30</span>
-    </div>
-
-    <div class="stat">
-      <span>🏃 민첩</span>
-      <span id="agility">30</span>
-    </div>
-
-    <div class="stat">
-      <span>📚 지능</span>
-      <span id="intelligence">40</span>
-    </div>
-
-    <div class="stat">
-      <span>💬 사교</span>
-      <span id="social">35</span>
-    </div>
-
-    <div class="stat">
-      <span>🧠 정신력</span>
-      <span id="mental">40</span>
-    </div>
-
-    <hr>
-
-    <div class="stat">
-      <span>💰 돈</span>
-      <span id="money">5000</span>
-    </div>
-
-    <div class="stat">
-      <span>😵 스트레스</span>
-      <span id="stress">20</span>
-    </div>
-
-  </div>
+    <input
+      type="text"
+      id="playerName"
+      placeholder="이름을 입력하세요"
+    >
 
 
-  <div class="menu">
+    <p>나이</p>
 
-    <button onclick="goSchool()">
-      🏫 학교
+    <button
+      id="age17"
+      onclick="selectAge(17)">
+      17살
     </button>
 
-    <button onclick="goTown()">
-      🏙️ 동네
+    <button
+      id="age18"
+      onclick="selectAge(18)">
+      18살
     </button>
 
-    <button onclick="goHome()">
-      🏠 집
+    <button
+      id="age19"
+      onclick="selectAge(19)">
+      19살
     </button>
 
-    <button onclick="showStatus()">
-      📋 상태
-    </button>
-
-  </div>
-
-
-  <div id="story">
-
-    <p>
-      아침이다.
+    <p id="ageText">
+      나이를 선택해주세요.
     </p>
 
-    <p>
-      오늘도 평범한 하루가 시작되는 것 같다.
+
+    <p>성별</p>
+
+    <button
+      id="male"
+      onclick="selectGender('남성')">
+      남성
+    </button>
+
+    <button
+      id="female"
+      onclick="selectGender('여성')">
+      여성
+    </button>
+
+    <p id="genderText">
+      성별을 선택해주세요.
     </p>
+
+
+    <br>
+
+    <button
+      class="choice"
+      onclick="startGame()">
+      게임 시작
+    </button>
+
+  </div>
+
+
+
+  <!-- =====================
+       실제 게임 화면
+  ====================== -->
+
+  <div id="gameScreen">
+
+    <h1>우리 동네의 이상한 아이들</h1>
+
+    <div id="date">
+      9월 1일 월요일 · 오전 7:30
+    </div>
+
+
+    <div class="status">
+
+      <div class="stat">
+        <span>이름</span>
+        <span id="name"></span>
+      </div>
+
+      <div class="stat">
+        <span>나이</span>
+        <span id="age"></span>
+      </div>
+
+      <div class="stat">
+        <span>성별</span>
+        <span id="gender"></span>
+      </div>
+
+      <hr>
+
+      <div class="stat">
+        <span>♥ 체력</span>
+        <span id="hp">50</span>
+      </div>
+
+      <div class="stat">
+        <span>⚔ 힘</span>
+        <span id="strength">30</span>
+      </div>
+
+      <div class="stat">
+        <span>🏃 민첩</span>
+        <span id="agility">30</span>
+      </div>
+
+      <div class="stat">
+        <span>📚 지능</span>
+        <span id="intelligence">40</span>
+      </div>
+
+      <div class="stat">
+        <span>💬 사교</span>
+        <span id="social">35</span>
+      </div>
+
+      <div class="stat">
+        <span>🧠 정신력</span>
+        <span id="mental">40</span>
+      </div>
+
+      <hr>
+
+      <div class="stat">
+        <span>💰 돈</span>
+        <span id="money">5000</span>
+      </div>
+
+      <div class="stat">
+        <span>😵 스트레스</span>
+        <span id="stress">20</span>
+      </div>
+
+    </div>
+
+
+    <div class="menu">
+
+      <button onclick="goSchool()">
+        🏫 학교
+      </button>
+
+      <button onclick="goTown()">
+        🏙️ 동네
+      </button>
+
+      <button onclick="goHome()">
+        🏠 집
+      </button>
+
+      <button onclick="showStatus()">
+        📋 상태
+      </button>
+
+    </div>
+
+
+    <div id="story">
+
+      <p>
+        새로운 하루가 시작되었다.
+      </p>
+
+      <p>
+        아직 아무것도 정해지지 않았다.
+      </p>
+
+    </div>
 
   </div>
 
 </div>
 
 
+
 <script>
+
+
+/* =====================
+   플레이어 정보
+===================== */
+
+let playerName = "";
+let playerAge = 0;
+let playerGender = "";
+
+
+/* =====================
+   시간
+===================== */
 
 let hour = 7;
 let minute = 30;
@@ -192,29 +337,182 @@ let minute = 30;
 let day = 1;
 
 
-/* =========================
-   시간
-========================= */
+
+/* =====================
+   나이 선택
+===================== */
+
+function selectAge(age) {
+
+  playerAge = age;
+
+  document.getElementById("ageText").innerText =
+    "선택한 나이: " + age + "살";
+
+
+  document.getElementById("age17").classList.remove("selected");
+  document.getElementById("age18").classList.remove("selected");
+  document.getElementById("age19").classList.remove("selected");
+
+
+  document
+    .getElementById("age" + age)
+    .classList.add("selected");
+
+}
+
+
+
+/* =====================
+   성별 선택
+===================== */
+
+function selectGender(gender) {
+
+  playerGender = gender;
+
+  document.getElementById("genderText").innerText =
+    "선택한 성별: " + gender;
+
+
+  document.getElementById("male")
+    .classList.remove("selected");
+
+  document.getElementById("female")
+    .classList.remove("selected");
+
+
+  if (gender === "남성") {
+
+    document
+      .getElementById("male")
+      .classList.add("selected");
+
+  }
+
+  else {
+
+    document
+      .getElementById("female")
+      .classList.add("selected");
+
+  }
+
+}
+
+
+
+/* =====================
+   게임 시작
+===================== */
+
+function startGame() {
+
+  playerName =
+    document.getElementById("playerName").value.trim();
+
+
+  if (playerName === "") {
+
+    alert("이름을 입력해주세요.");
+
+    return;
+
+  }
+
+
+  if (playerAge === 0) {
+
+    alert("나이를 선택해주세요.");
+
+    return;
+
+  }
+
+
+  if (playerGender === "") {
+
+    alert("성별을 선택해주세요.");
+
+    return;
+
+  }
+
+
+  document.getElementById("name").innerText =
+    playerName;
+
+  document.getElementById("age").innerText =
+    playerAge + "살";
+
+  document.getElementById("gender").innerText =
+    playerGender;
+
+
+  document.getElementById("creation").style.display =
+    "none";
+
+  document.getElementById("gameScreen").style.display =
+    "block";
+
+
+  document.getElementById("story").innerHTML = `
+
+    <p>
+      ${playerName}은(는)
+      오늘도 학교에 갈 준비를 했다.
+    </p>
+
+    <p>
+      ${playerAge}살의 평범한 학생.
+    </p>
+
+    <p>
+      적어도 지금까지는 그랬다.
+    </p>
+
+  `;
+
+}
+
+
+
+/* =====================
+   시간 진행
+===================== */
 
 function advanceTime(minutes) {
 
   minute += minutes;
 
+
   while (minute >= 60) {
 
     minute -= 60;
+
     hour++;
 
   }
+
+
+  if (hour >= 24) {
+
+    hour = 0;
+
+    day++;
+
+  }
+
 
   updateTime();
 
 }
 
 
-/* =========================
-   시간 화면 표시
-========================= */
+
+/* =====================
+   시간 표시
+===================== */
 
 function updateTime() {
 
@@ -222,44 +520,62 @@ function updateTime() {
 
   let displayHour = hour;
 
+
   if (hour >= 12) {
 
     period = "오후";
 
     if (hour > 12) {
+
       displayHour = hour - 12;
+
     }
 
   }
 
+
+  if (displayHour === 0) {
+
+    displayHour = 12;
+
+  }
+
+
   document.getElementById("date").innerText =
-    "9월 " + day + "일 월요일 · " +
-    period + " " +
-    displayHour + ":" +
+
+    "9월 " +
+    day +
+    "일 월요일 · " +
+    period +
+    " " +
+    displayHour +
+    ":" +
     String(minute).padStart(2, "0");
 
 }
 
 
-/* =========================
+
+/* =====================
    학교
-========================= */
+===================== */
 
 function goSchool() {
 
   advanceTime(30);
+
 
   document.getElementById("story").innerHTML = `
 
     <h3>🏫 학교</h3>
 
     <p>
+      ${playerName}은(는)
       학교에 도착했다.
     </p>
 
     <p>
       복도에는 학생들이 가득하다.
-      아직 수업 시작까지 시간이 조금 남았다.
     </p>
 
     <button onclick="classroom()">
@@ -275,13 +591,15 @@ function goSchool() {
 }
 
 
-/* =========================
+
+/* =====================
    교실
-========================= */
+===================== */
 
 function classroom() {
 
   advanceTime(30);
+
 
   document.getElementById("story").innerHTML = `
 
@@ -292,7 +610,7 @@ function classroom() {
     </p>
 
     <p>
-      창밖으로 익숙한 동네가 보인다.
+      아직 수업 시작까지 시간이 조금 남았다.
     </p>
 
     <button onclick="study()">
@@ -308,26 +626,33 @@ function classroom() {
 }
 
 
-/* =========================
+
+/* =====================
    공부
-========================= */
+===================== */
 
 function study() {
 
   advanceTime(60);
 
+
   let intelligence =
-    Number(document.getElementById("intelligence").innerText);
+    Number(
+      document.getElementById("intelligence").innerText
+    );
+
 
   intelligence += 3;
+
 
   document.getElementById("intelligence").innerText =
     intelligence;
 
+
   document.getElementById("story").innerHTML = `
 
     <p>
-      수업에 집중했다.
+      열심히 공부했다.
     </p>
 
     <p>
@@ -339,28 +664,35 @@ function study() {
 }
 
 
-/* =========================
+
+/* =====================
    친구
-========================= */
+===================== */
 
 function schoolFriend() {
 
   advanceTime(30);
 
+
   let social =
-    Number(document.getElementById("social").innerText);
+    Number(
+      document.getElementById("social").innerText
+    );
+
 
   social += 2;
 
+
   document.getElementById("social").innerText =
     social;
+
 
   document.getElementById("story").innerHTML = `
 
     <h3>친구</h3>
 
     <p>
-      친구와 잠깐 이야기를 나눴다.
+      친구와 이야기를 나눴다.
     </p>
 
     <p>
@@ -372,13 +704,15 @@ function schoolFriend() {
 }
 
 
-/* =========================
+
+/* =====================
    창밖
-========================= */
+===================== */
 
 function lookOutside() {
 
   advanceTime(15);
+
 
   document.getElementById("story").innerHTML = `
 
@@ -391,8 +725,12 @@ function lookOutside() {
     </p>
 
     <p>
-      ……그런데 골목 끝에
-      이상한 그림자가 보인 것 같다.
+      ……그런데.
+    </p>
+
+    <p>
+      골목 끝에서
+      이상한 그림자가 움직였다.
     </p>
 
   `;
@@ -400,13 +738,15 @@ function lookOutside() {
 }
 
 
-/* =========================
+
+/* =====================
    동네
-========================= */
+===================== */
 
 function goTown() {
 
   advanceTime(30);
+
 
   document.getElementById("story").innerHTML = `
 
@@ -429,13 +769,15 @@ function goTown() {
 }
 
 
-/* =========================
+
+/* =====================
    뒷골목
-========================= */
+===================== */
 
 function backStreet() {
 
   advanceTime(20);
+
 
   document.getElementById("story").innerHTML = `
 
@@ -458,13 +800,15 @@ function backStreet() {
 }
 
 
-/* =========================
+
+/* =====================
    싸움 이벤트
-========================= */
+===================== */
 
 function fightEvent() {
 
   advanceTime(10);
+
 
   document.getElementById("story").innerHTML = `
 
@@ -492,24 +836,33 @@ function fightEvent() {
 }
 
 
-/* =========================
+
+/* =====================
    싸움
-========================= */
+===================== */
 
 function fight() {
 
   let strength =
-    Number(document.getElementById("strength").innerText);
+    Number(
+      document.getElementById("strength").innerText
+    );
+
 
   let hp =
-    Number(document.getElementById("hp").innerText);
+    Number(
+      document.getElementById("hp").innerText
+    );
+
 
   advanceTime(15);
+
 
   if (strength >= 30) {
 
     document.getElementById("strength").innerText =
       strength + 2;
+
 
     document.getElementById("story").innerHTML = `
 
@@ -518,7 +871,8 @@ function fight() {
       </p>
 
       <p>
-        당신은 어떻게든 상대를 물러나게 했다.
+        ${playerName}은(는)
+        상대를 물러나게 했다.
       </p>
 
       <p>
@@ -527,12 +881,23 @@ function fight() {
 
     `;
 
-  } else {
+  }
+
+  else {
 
     hp -= 10;
 
+
+    if (hp < 0) {
+
+      hp = 0;
+
+    }
+
+
     document.getElementById("hp").innerText =
       hp;
+
 
     document.getElementById("story").innerHTML = `
 
@@ -551,25 +916,33 @@ function fight() {
 }
 
 
-/* =========================
+
+/* =====================
    도망
-========================= */
+===================== */
 
 function runAway() {
 
   advanceTime(10);
 
+
   let agility =
-    Number(document.getElementById("agility").innerText);
+    Number(
+      document.getElementById("agility").innerText
+    );
+
 
   agility += 1;
+
 
   document.getElementById("agility").innerText =
     agility;
 
+
   document.getElementById("story").innerHTML = `
 
     <p>
+      ${playerName}은(는)
       재빨리 도망쳤다.
     </p>
 
@@ -582,13 +955,15 @@ function runAway() {
 }
 
 
-/* =========================
+
+/* =====================
    상점
-========================= */
+===================== */
 
 function shop() {
 
   advanceTime(20);
+
 
   document.getElementById("story").innerHTML = `
 
@@ -607,14 +982,18 @@ function shop() {
 }
 
 
-/* =========================
+
+/* =====================
    간식
-========================= */
+===================== */
 
 function buySnack() {
 
   let money =
-    Number(document.getElementById("money").innerText);
+    Number(
+      document.getElementById("money").innerText
+    );
+
 
   if (money < 100) {
 
@@ -625,10 +1004,13 @@ function buySnack() {
 
   }
 
+
   money -= 100;
+
 
   document.getElementById("money").innerText =
     money;
+
 
   document.getElementById("story").innerText =
     "간식을 먹었다. 맛있다.";
@@ -636,19 +1018,22 @@ function buySnack() {
 }
 
 
-/* =========================
+
+/* =====================
    집
-========================= */
+===================== */
 
 function goHome() {
 
   advanceTime(30);
+
 
   document.getElementById("story").innerHTML = `
 
     <h3>🏠 집</h3>
 
     <p>
+      ${playerName}은(는)
       집으로 돌아왔다.
     </p>
 
@@ -661,25 +1046,35 @@ function goHome() {
 }
 
 
-/* =========================
+
+/* =====================
    휴식
-========================= */
+===================== */
 
 function rest() {
 
   advanceTime(60);
 
+
   let hp =
-    Number(document.getElementById("hp").innerText);
+    Number(
+      document.getElementById("hp").innerText
+    );
+
 
   hp += 10;
 
+
   if (hp > 100) {
+
     hp = 100;
+
   }
+
 
   document.getElementById("hp").innerText =
     hp;
+
 
   document.getElementById("story").innerHTML = `
 
@@ -696,15 +1091,28 @@ function rest() {
 }
 
 
-/* =========================
+
+/* =====================
    상태
-========================= */
+===================== */
 
 function showStatus() {
 
   document.getElementById("story").innerHTML = `
 
     <h3>📋 상태</h3>
+
+    <p>
+      이름: ${playerName}
+    </p>
+
+    <p>
+      나이: ${playerAge}살
+    </p>
+
+    <p>
+      성별: ${playerGender}
+    </p>
 
     <p>
       아직은 평범한 학생이다.
@@ -718,6 +1126,7 @@ function showStatus() {
   `;
 
 }
+
 
 </script>
 
