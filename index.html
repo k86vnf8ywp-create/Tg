@@ -482,77 +482,59 @@ function startGame() {
 /* =====================
    시간 진행
 ===================== */
-
 function advanceTime(minutes) {
 
   minute += minutes;
 
   while (minute >= 60) {
-
     minute -= 60;
     hour++;
-
   }
 
   if (hour >= 24) {
-
     hour = 0;
     day++;
-
   }
 
   updatePhase();
-
   updateTime();
 
-}function updatePhase() {
+}
+
+
+// 👇 여기부터 새로 붙이는 코드
+
+function updatePhase() {
 
   if (hour >= 6 && hour < 8) {
-
     phase = "아침";
-
   }
 
   else if (hour >= 8 && hour < 12) {
-
     phase = "수업";
-
   }
 
   else if (hour >= 12 && hour < 13) {
-
     phase = "점심";
-
   }
 
   else if (hour >= 13 && hour < 16) {
-
     phase = "수업";
-
   }
 
   else if (hour >= 16 && hour < 19) {
-
     phase = "방과후";
-
   }
 
   else if (hour >= 19 && hour < 22) {
-
     phase = "저녁";
-
   }
 
   else {
-
     phase = "밤";
-
   }
 
-
-
-
-
+}
 
 
 /* =====================
