@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>School Fantasy RPG</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+
+<body>
+
+  <div class="container">
+
+    <h1>School Fantasy RPG</h1>
+
+
+    <!-- =========================
+         캐릭터 생성
+    ========================== -->
+
+    <div id="creationScreen" class="screen">
+
+      <div class="title">
+        캐릭터 생성
+      </div>
+
+      <p>이름</p>
+
+      <input
+        type="text"
+        id="nameInput"
+        placeholder="이름을 입력하세요"
+      >
+
+
+      <p>나이</p>
+
+      <button id="age17" onclick="selectAge(17)">
+        17세
+      </button>
+
+      <button id="age18" onclick="selectAge(18)">
+        18세
+      </button>
+
+      <button id="age19" onclick="selectAge(19)">
+        19세
+      </button>
+
+
+      <p>성별</p>
+
+      <button
+        id="genderMale"
+        onclick="selectGender('남성')"
+      >
+        남성
+      </button>
+
+      <button
+        id="genderFemale"
+        onclick="selectGender('여성')"
+      >
+        여성
+      </button>
+
+
+      <br><br>
+
+
+      <button
+        class="good"
+        onclick="startGame()"
+      >
+        게임 시작
+      </button>
+
+    </div>
+
+
+
+    <!-- =========================
+         게임 화면
+    ========================== -->
+
+    <div
+      id="gameScreen"
+      class="screen hidden"
+    >
+
+      <div id="playerInfo"></div>
+
+      <div id="date"></div>
+
+      <hr>
+
+
+      <div
+        id="stats"
+        class="stats"
+      ></div>
+
+
+      <div class="menu">
+
+        <button onclick="goSchool()">
+          🏫 학교
+        </button>
+
+        <button onclick="goTown()">
+          🌆 마을
+        </button>
+
+        <button onclick="goHome()">
+          🏠 집
+        </button>
+
+        <button onclick="showStatus()">
+          📋 상태
+        </button>
+
+      </div>
+
+
+      <div
+        id="story"
+        class="story"
+      >
+        게임을 시작하세요.
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- 캐릭터 데이터 -->
+
+  <script src="characters.js"></script>
+
+
+  <!-- 이벤트 데이터 -->
+
+  <script src="events.js"></script>
+
+
+  <!-- 게임 본체 -->
+
+  <script src="game.js"></script>
+
+</body>
+
+</html>
