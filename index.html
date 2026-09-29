@@ -336,6 +336,8 @@ let minute = 30;
 
 let day = 1;
 
+let phase = "아침";
+
 
 
 /* =====================
@@ -485,30 +487,71 @@ function advanceTime(minutes) {
 
   minute += minutes;
 
-
   while (minute >= 60) {
 
     minute -= 60;
-
     hour++;
 
   }
 
-
   if (hour >= 24) {
 
     hour = 0;
-
     day++;
 
   }
 
+  updatePhase();
 
   updateTime();
 
 }
 
+function updatePhase() {
 
+  if (hour >= 6 && hour < 8) {
+
+    phase = "아침";
+
+  }
+
+  else if (hour >= 8 && hour < 12) {
+
+    phase = "수업";
+
+  }
+
+  else if (hour >= 12 && hour < 13) {
+
+    phase = "점심";
+
+  }
+
+  else if (hour >= 13 && hour < 16) {
+
+    phase = "수업";
+
+  }
+
+  else if (hour >= 16 && hour < 19) {
+
+    phase = "방과후";
+
+  }
+
+  else if (hour >= 19 && hour < 22) {
+
+    phase = "저녁";
+
+  }
+
+  else {
+
+    phase = "밤";
+
+  }
+
+}
 
 /* =====================
    시간 표시
@@ -543,15 +586,16 @@ function updateTime() {
 
   document.getElementById("date").innerText =
 
-    "9월 " +
-    day +
-    "일 월요일 · " +
-    period +
-    " " +
-    displayHour +
-    ":" +
-    String(minute).padStart(2, "0");
-
+  "9월 " +
+  day +
+  "일 월요일 · " +
+  period +
+  " " +
+  displayHour +
+  ":" +
+  String(minute).padStart(2, "0") +
+  " · " +
+  phase;
 }
 
 
