@@ -1,126 +1,673 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>우리 동네의 이상한 아이들</title>
+
+  <style>
+
+    body {
+      margin: 0;
+      background: #202020;
+      color: #eeeeee;
+      font-family: sans-serif;
+    }
+
+    #game {
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 5px;
+    }
+
+    #date {
+      text-align: center;
+      color: #bbbbbb;
+      margin-bottom: 20px;
+    }
+
+    .status {
+      background: #303030;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .stat {
+      display: flex;
+      justify-content: space-between;
+      margin: 7px 0;
+    }
+
+    .menu {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    button {
+      background: #444444;
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    button:active {
+      background: #666666;
+    }
+
+    #story {
+      background: #303030;
+      padding: 20px;
+      border-radius: 10px;
+      min-height: 100px;
+      line-height: 1.7;
+    }
+
+  </style>
+
 </head>
 
 <body>
 
+<div id="game">
+
   <h1>우리 동네의 이상한 아이들</h1>
 
-  <h2>주인공 만들기</h2>
+  <div id="date">
+    9월 1일 월요일 · 오전 7:30
+  </div>
 
-  <p>이름</p>
-  <input type="text" id="name" placeholder="이름을 입력하세요">
 
-  <p>나이</p>
-  <button onclick="selectAge(17)">17살</button>
-  <button onclick="selectAge(18)">18살</button>
-  <button onclick="selectAge(19)">19살</button>
+  <div class="status">
 
-  <p id="ageText">나이를 선택해주세요.</p>
+    <div class="stat">
+      <span>이름</span>
+      <span id="name">기령</span>
+    </div>
 
-  <p>성별</p>
-  <button onclick="selectGender('남성')">남성</button>
-  <button onclick="selectGender('여성')">여성</button>
-
-  <p id="genderText">성별을 선택해주세요.</p>
-
-  <br>
-
-  <button onclick="startGame()">게임 시작</button>
-
-  <div id="game" style="display:none;">
+    <div class="stat">
+      <span>나이</span>
+      <span id="age">18</span>
+    </div>
 
     <hr>
 
-    <h2 id="welcome"></h2>
+    <div class="stat">
+      <span>♥ 체력</span>
+      <span id="hp">50</span>
+    </div>
 
-    <p>체력: <span id="hp">50</span></p>
-    <p>힘: <span id="strength">30</span></p>
-    <p>민첩: <span id="agility">30</span></p>
-    <p>지능: <span id="intelligence">40</span></p>
-    <p>사교: <span id="social">35</span></p>
-    <p>정신력: <span id="mental">40</span></p>
+    <div class="stat">
+      <span>⚔ 힘</span>
+      <span id="strength">30</span>
+    </div>
+
+    <div class="stat">
+      <span>🏃 민첩</span>
+      <span id="agility">30</span>
+    </div>
+
+    <div class="stat">
+      <span>📚 지능</span>
+      <span id="intelligence">40</span>
+    </div>
+
+    <div class="stat">
+      <span>💬 사교</span>
+      <span id="social">35</span>
+    </div>
+
+    <div class="stat">
+      <span>🧠 정신력</span>
+      <span id="mental">40</span>
+    </div>
 
     <hr>
 
-    <h3>오늘은 무엇을 할까?</h3>
+    <div class="stat">
+      <span>💰 돈</span>
+      <span id="money">5000</span>
+    </div>
 
-    <button onclick="goToSchool()">학교에 간다</button>
-    <button onclick="study()">공부한다</button>
-    <button onclick="rest()">쉰다</button>
-
-    <p id="result"></p>
+    <div class="stat">
+      <span>😵 스트레스</span>
+      <span id="stress">20</span>
+    </div>
 
   </div>
 
+
+  <div class="menu">
+
+    <button onclick="goSchool()">
+      🏫 학교
+    </button>
+
+    <button onclick="goTown()">
+      🏙️ 동네
+    </button>
+
+    <button onclick="goHome()">
+      🏠 집
+    </button>
+
+    <button onclick="showStatus()">
+      📋 상태
+    </button>
+
+  </div>
+
+
+  <div id="story">
+
+    <p>
+      아침이다.
+    </p>
+
+    <p>
+      오늘도 평범한 하루가 시작되는 것 같다.
+    </p>
+
+  </div>
+
+</div>
+
+
 <script>
 
-let playerName = "";
-let playerAge = 0;
-let playerGender = "";
+let hour = 7;
+let minute = 30;
 
-function selectAge(age) {
-  playerAge = age;
-  document.getElementById("ageText").innerText =
-    "선택한 나이: " + age;
-}
+let day = 1;
 
-function selectGender(gender) {
-  playerGender = gender;
-  document.getElementById("genderText").innerText =
-    "선택한 성별: " + gender;
-}
 
-function startGame() {
+/* =========================
+   시간
+========================= */
 
-  playerName = document.getElementById("name").value;
+function advanceTime(minutes) {
 
-  if (playerName === "") {
-    alert("이름을 입력해주세요.");
-    return;
+  minute += minutes;
+
+  while (minute >= 60) {
+
+    minute -= 60;
+    hour++;
+
   }
 
-  if (playerAge === 0) {
-    alert("나이를 선택해주세요.");
-    return;
-  }
+  updateTime();
 
-  if (playerGender === "") {
-    alert("성별을 선택해주세요.");
-    return;
-  }
-
-  document.getElementById("welcome").innerText =
-    playerName + "의 이야기";
-
-  document.getElementById("game").style.display = "block";
 }
 
-function goToSchool() {
 
-  document.getElementById("result").innerText =
-    "당신은 학교로 향했다. 오늘은 무슨 일이 일어날까?";
+/* =========================
+   시간 화면 표시
+========================= */
+
+function updateTime() {
+
+  let period = "오전";
+
+  let displayHour = hour;
+
+  if (hour >= 12) {
+
+    period = "오후";
+
+    if (hour > 12) {
+      displayHour = hour - 12;
+    }
+
+  }
+
+  document.getElementById("date").innerText =
+    "9월 " + day + "일 월요일 · " +
+    period + " " +
+    displayHour + ":" +
+    String(minute).padStart(2, "0");
+
 }
+
+
+/* =========================
+   학교
+========================= */
+
+function goSchool() {
+
+  advanceTime(30);
+
+  document.getElementById("story").innerHTML = `
+
+    <h3>🏫 학교</h3>
+
+    <p>
+      학교에 도착했다.
+    </p>
+
+    <p>
+      복도에는 학생들이 가득하다.
+      아직 수업 시작까지 시간이 조금 남았다.
+    </p>
+
+    <button onclick="classroom()">
+      교실로 간다
+    </button>
+
+    <button onclick="schoolFriend()">
+      친구를 찾는다
+    </button>
+
+  `;
+
+}
+
+
+/* =========================
+   교실
+========================= */
+
+function classroom() {
+
+  advanceTime(30);
+
+  document.getElementById("story").innerHTML = `
+
+    <h3>📚 교실</h3>
+
+    <p>
+      자리에 앉았다.
+    </p>
+
+    <p>
+      창밖으로 익숙한 동네가 보인다.
+    </p>
+
+    <button onclick="study()">
+      공부한다
+    </button>
+
+    <button onclick="lookOutside()">
+      창밖을 본다
+    </button>
+
+  `;
+
+}
+
+
+/* =========================
+   공부
+========================= */
 
 function study() {
+
+  advanceTime(60);
 
   let intelligence =
     Number(document.getElementById("intelligence").innerText);
 
-  intelligence += 5;
+  intelligence += 3;
 
   document.getElementById("intelligence").innerText =
     intelligence;
 
-  document.getElementById("result").innerText =
-    "열심히 공부했다. 지능이 5 올랐다.";
+  document.getElementById("story").innerHTML = `
+
+    <p>
+      수업에 집중했다.
+    </p>
+
+    <p>
+      지능이 3 올랐다.
+    </p>
+
+  `;
+
 }
 
+
+/* =========================
+   친구
+========================= */
+
+function schoolFriend() {
+
+  advanceTime(30);
+
+  let social =
+    Number(document.getElementById("social").innerText);
+
+  social += 2;
+
+  document.getElementById("social").innerText =
+    social;
+
+  document.getElementById("story").innerHTML = `
+
+    <h3>친구</h3>
+
+    <p>
+      친구와 잠깐 이야기를 나눴다.
+    </p>
+
+    <p>
+      사교가 2 올랐다.
+    </p>
+
+  `;
+
+}
+
+
+/* =========================
+   창밖
+========================= */
+
+function lookOutside() {
+
+  advanceTime(15);
+
+  document.getElementById("story").innerHTML = `
+
+    <p>
+      창밖을 바라본다.
+    </p>
+
+    <p>
+      평범한 거리다.
+    </p>
+
+    <p>
+      ……그런데 골목 끝에
+      이상한 그림자가 보인 것 같다.
+    </p>
+
+  `;
+
+}
+
+
+/* =========================
+   동네
+========================= */
+
+function goTown() {
+
+  advanceTime(30);
+
+  document.getElementById("story").innerHTML = `
+
+    <h3>🏙️ 동네</h3>
+
+    <p>
+      학교 근처의 번화가로 나왔다.
+    </p>
+
+    <button onclick="backStreet()">
+      뒷골목
+    </button>
+
+    <button onclick="shop()">
+      상점
+    </button>
+
+  `;
+
+}
+
+
+/* =========================
+   뒷골목
+========================= */
+
+function backStreet() {
+
+  advanceTime(20);
+
+  document.getElementById("story").innerHTML = `
+
+    <h3>🌙 뒷골목</h3>
+
+    <p>
+      사람이 별로 없는 골목이다.
+    </p>
+
+    <p>
+      멀리서 누군가의 목소리가 들린다.
+    </p>
+
+    <button onclick="fightEvent()">
+      다가간다
+    </button>
+
+  `;
+
+}
+
+
+/* =========================
+   싸움 이벤트
+========================= */
+
+function fightEvent() {
+
+  advanceTime(10);
+
+  document.getElementById("story").innerHTML = `
+
+    <h3>⚠️ 불량배</h3>
+
+    <p>
+      "야."
+    </p>
+
+    <p>
+      골목에서 불량배 한 명이
+      당신을 바라보고 있다.
+    </p>
+
+    <button onclick="fight()">
+      싸운다
+    </button>
+
+    <button onclick="runAway()">
+      도망친다
+    </button>
+
+  `;
+
+}
+
+
+/* =========================
+   싸움
+========================= */
+
+function fight() {
+
+  let strength =
+    Number(document.getElementById("strength").innerText);
+
+  let hp =
+    Number(document.getElementById("hp").innerText);
+
+  advanceTime(15);
+
+  if (strength >= 30) {
+
+    document.getElementById("strength").innerText =
+      strength + 2;
+
+    document.getElementById("story").innerHTML = `
+
+      <p>
+        싸움이 시작됐다.
+      </p>
+
+      <p>
+        당신은 어떻게든 상대를 물러나게 했다.
+      </p>
+
+      <p>
+        힘이 2 올랐다.
+      </p>
+
+    `;
+
+  } else {
+
+    hp -= 10;
+
+    document.getElementById("hp").innerText =
+      hp;
+
+    document.getElementById("story").innerHTML = `
+
+      <p>
+        싸움에서 밀렸다.
+      </p>
+
+      <p>
+        체력이 10 감소했다.
+      </p>
+
+    `;
+
+  }
+
+}
+
+
+/* =========================
+   도망
+========================= */
+
+function runAway() {
+
+  advanceTime(10);
+
+  let agility =
+    Number(document.getElementById("agility").innerText);
+
+  agility += 1;
+
+  document.getElementById("agility").innerText =
+    agility;
+
+  document.getElementById("story").innerHTML = `
+
+    <p>
+      재빨리 도망쳤다.
+    </p>
+
+    <p>
+      민첩이 1 올랐다.
+    </p>
+
+  `;
+
+}
+
+
+/* =========================
+   상점
+========================= */
+
+function shop() {
+
+  advanceTime(20);
+
+  document.getElementById("story").innerHTML = `
+
+    <h3>🏪 상점</h3>
+
+    <p>
+      간단한 물건들을 파는 가게다.
+    </p>
+
+    <button onclick="buySnack()">
+      간식 구매 - 100원
+    </button>
+
+  `;
+
+}
+
+
+/* =========================
+   간식
+========================= */
+
+function buySnack() {
+
+  let money =
+    Number(document.getElementById("money").innerText);
+
+  if (money < 100) {
+
+    document.getElementById("story").innerText =
+      "돈이 부족하다.";
+
+    return;
+
+  }
+
+  money -= 100;
+
+  document.getElementById("money").innerText =
+    money;
+
+  document.getElementById("story").innerText =
+    "간식을 먹었다. 맛있다.";
+
+}
+
+
+/* =========================
+   집
+========================= */
+
+function goHome() {
+
+  advanceTime(30);
+
+  document.getElementById("story").innerHTML = `
+
+    <h3>🏠 집</h3>
+
+    <p>
+      집으로 돌아왔다.
+    </p>
+
+    <button onclick="rest()">
+      쉰다
+    </button>
+
+  `;
+
+}
+
+
+/* =========================
+   휴식
+========================= */
+
 function rest() {
+
+  advanceTime(60);
 
   let hp =
     Number(document.getElementById("hp").innerText);
@@ -131,13 +678,50 @@ function rest() {
     hp = 100;
   }
 
-  document.getElementById("hp").innerText = hp;
+  document.getElementById("hp").innerText =
+    hp;
 
-  document.getElementById("result").innerText =
-    "푹 쉬었다. 체력이 회복됐다.";
+  document.getElementById("story").innerHTML = `
+
+    <p>
+      푹 쉬었다.
+    </p>
+
+    <p>
+      체력이 10 회복됐다.
+    </p>
+
+  `;
+
 }
+
+
+/* =========================
+   상태
+========================= */
+
+function showStatus() {
+
+  document.getElementById("story").innerHTML = `
+
+    <h3>📋 상태</h3>
+
+    <p>
+      아직은 평범한 학생이다.
+    </p>
+
+    <p>
+      하지만 이 동네에는
+      조금 이상한 일이 벌어지고 있는 것 같다.
+    </p>
+
+  `;
+
+}
+
 
 </script>
 
 </body>
+
 </html>
