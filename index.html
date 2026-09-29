@@ -1050,29 +1050,37 @@ function buySnack() {
 /* =====================
    집
 ===================== */
-
 function goHome() {
-
   advanceTime(30);
 
+  story.innerHTML = `
+    <p>집에 도착했다.</p>
 
-  document.getElementById("story").innerHTML = `
-
-    <h3>🏠 집</h3>
-
-    <p>
-      ${playerName}은(는)
-      집으로 돌아왔다.
-    </p>
-
-    <button onclick="rest()">
-      쉰다
-    </button>
-
+    <button onclick="rest()">휴식</button>
+    <button onclick="sleep()">취침</button>
   `;
+}function sleep() {
 
+  day++;
+
+  hour = 7;
+  minute = 30;
+
+  phase = "아침";
+
+  player.hp = Math.min(player.hp + 30, 100);
+  player.stress = Math.max(player.stress - 20, 0);
+
+  updateTime();
+
+  story.innerHTML = `
+    <p>잠에서 깨어났다.</p>
+    <p>새로운 하루가 시작되었다.</p>
+
+    <button onclick="goSchool()">학교에 간다</button>
+    <button onclick="goTown()">마을로 간다</button>
+  `;
 }
-
 
 
 /* =====================
